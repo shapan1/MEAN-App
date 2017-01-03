@@ -1,0 +1,4 @@
+.bgimage {
+    background: url("../vendor/bgimage/lowPolyBG.jpg") no-repeat center center fixed;
+    background-size: 100% auto;
+}
