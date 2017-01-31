@@ -25,6 +25,9 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/public'));
 
+app.get('/partials:partialPath', function(req, res){
+    res.render('partials/' + req.paras.partialPath);
+});
 // * matches all routes, js css and img requests.
 // allows me to setup client side route to show the correct view.
 // remember to co-ordinate the routes.
