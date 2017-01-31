@@ -1,42 +1,53 @@
-var express = require("express");
-// stylus to serve up css files.
-var stylus =  require("stylus");
-var logger = require("morgan");
-var bodyParser = require("body-parser");
+var express = require('express'),
+  stylus = require('stylus'),
+  logger = require('morgan'),
+  bodyParser = require('body-parser'),
+  mongoose = require('mongoose');
 
-var app = express();
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-function compile(str, path){
-    return stylus(str).set('filename', path);
+var app = express();
+
+function compile(str, path) {
+  return stylus(str).set('filename', path);
 }
+
 app.set('views', __dirname + '/server/views');
 app.set('view engine', 'jade');
-
 app.use(logger('dev'));
-app.use(stylus.middleware(
-    {
-        src: __dirname + '/public',
-        compile: compile
-    }
-));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-
+app.use(stylus.middleware(
+  {
+    src: __dirname + '/public',
+    compile: compile
+  }
+));
 app.use(express.static(__dirname + '/public'));
 
-app.get('/partials:partialPath', function(req, res){
-    res.render('partials/' + req.paras.partialPath);
+mongoose.connect('mongodb://localhost/multivision');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error...'));
+db.once('open', function callback() {
+  console.log('multivision db opened');
 });
-// * matches all routes, js css and img requests.
-// allows me to setup client side route to show the correct view.
-// remember to co-ordinate the routes.
-app.get('*', function(req, res){
-    res.render('index');
+var messageSchema = mongoose.Schema({message: String});
+var Message = mongoose.model('Message', messageSchema);
+var mongoMessage;
+Message.findOne().exec(function(err, messageDoc) {
+  mongoMessage = messageDoc.message;
+});
+
+app.get('/partials/:partialPath', function(req, res) {
+    res.render('partials/' + req.params.partialPath);
+});
+
+app.get('*', function(req, res) {
+  res.render('index', {
+    mongoMessage: mongoMessage
+  });
 });
 
 var port = 3030;
 app.listen(port);
-console.log("listening to Port on port#: " + port);
-
-module.exports = app;
+console.log('Listening on port ' + port + '...');
