@@ -55,6 +55,6 @@ app.get('*', function(req, res) {
   });
 });
 
-var port = process.env.port || CONFIG.port;
+var port = process.env.port || 5000;
 app.listen(port);
 console.log('Listening on port ' + port + '...');
