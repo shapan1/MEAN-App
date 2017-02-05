@@ -55,6 +55,7 @@ app.get('*', function(req, res) {
   });
 });
 
+app.listen(process.env.port || 5000);
+
 var port = process.env.port || 5000;
-app.listen(port);
 console.log('Listening on port ' + port + '...');
