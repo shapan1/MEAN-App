@@ -4,8 +4,8 @@ var express = require('express'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose');
 
-//var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-var env = process.env.NODE_ENV || 'prod';
+var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
 var app = express();
 
 function compile(str, path) {
@@ -55,6 +55,6 @@ app.get('*', function(req, res) {
   });
 });
 
-var port = process.env.port || 3030;
+var port = process.env.port;
 app.listen(port);
 console.log('Listening on port ' + port + '...');
