@@ -27,11 +27,11 @@ app.use(express.static(__dirname + '/public'));
 /*
 for switching between dev and prod environments.
  */
-// if(env === 'development'){
-//     mongoose.connect('mongodb://localhost/multivision');
-// } else {
+ if(env === 'development'){
+    mongoose.connect('mongodb://localhost/multivision');
+ } else {
     mongoose.connect('mongodb://shapan:shapan1234@ds143449.mlab.com:43449/multivision');
-// }
+}
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error...'));
