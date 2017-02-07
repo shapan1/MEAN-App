@@ -54,7 +54,7 @@ app.get('*', function(req, res) {
     mongoMessage: mongoMessage
   });
 });
-var port = process.env.port || 3030;
+var port = process.env.port;
 app.listen(port);
 
 console.log('Listening on port ' + port + '...');
