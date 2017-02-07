@@ -27,11 +27,11 @@ app.use(express.static(__dirname + '/public'));
 /*
 for switching between dev and prod environments.
  */
-if(env === 'development'){
-    mongoose.connect('mongodb://localhost/multivision');
-} else {
+// if(env === 'development'){
+//     mongoose.connect('mongodb://localhost/multivision');
+// } else {
     mongoose.connect('mongodb://shapan:shapan1234@ds143449.mlab.com:43449/multivision');
-}
+// }
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error...'));
@@ -54,8 +54,7 @@ app.get('*', function(req, res) {
     mongoMessage: mongoMessage
   });
 });
+var port = process.env.port || 3030;
+app.listen(port);
 
-app.listen(process.env.port || 5000);
-
-var port = process.env.port || 5000;
 console.log('Listening on port ' + port + '...');
