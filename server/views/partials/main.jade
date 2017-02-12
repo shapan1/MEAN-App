@@ -1,2 +1,11 @@
-h1 This is a Partial
-h2 {{ myVar }}
+.container
+    .jumbotron
+        h1 MEAN Stack
+            h2 MultiVision App
+        p Welcome to my first MEAN stack APP! Why, you ask? Cause MEAN stack is the bomb right now!
+
+    .row
+        .col-md-6
+            div(ng-include="'/partials/featured-courses'")
+        .col-md-6
+            div(ng-incude="'/partials/new-courses'")
